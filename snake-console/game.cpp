@@ -20,22 +20,36 @@ char arrGameField[CountOfSym] =								// main array of gamefield symbols
 	'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '\n',
 	'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 
 };
+
 char GameCharacter = '@';
+
+void drawField() {
+
+	for (int i = 0; i < CountOfSym; i++) {
+		std::cout << arrGameField[i];
+	}
+
+}
+
+void getCls() {
+	Sleep(200);
+	system("cls");
+}
+
 
 int main() {
 
 	while (true) {
-		char action;
 
+
+		char action;
 		arrGameField[charPos] = GameCharacter;
 
-		for (int i = 0; i < 109; i++) {					// Loop for draw a gamefield
-			std::cout << arrGameField[i];
-		}
+		drawField();
 
 		prevPos = charPos;
-
 		std::cin >> action;
+
 		
 
 		if (action == 'w') {							// handler for check action for input chars
@@ -57,8 +71,7 @@ int main() {
 		arrGameField[prevPos] = ' ';
 
 
-		Sleep(200);
-		system("cls");
+		getCls();
 	}
 
 	return 0;
