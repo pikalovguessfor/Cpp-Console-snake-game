@@ -6,6 +6,10 @@ int charPos = (CountOfSym / 2 - 5);							//start initializer of position of cha
 int prevPos;
 int positionEnemy;
 int previousPositionEnemy;
+int score;
+
+char GameCharacter = '@';
+char Enemy = '&';
 
 const std::string arrMessages[10] = { "invalid input", "", "", "", "", "", "", "", "", ""}; //array of messages for unexpected situations
 
@@ -23,9 +27,6 @@ char arrGameField[CountOfSym] =								// main array of gamefield symbols
 	'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 
 };
 
-char GameCharacter = '@';
-char Enemy = '&';
-
 
 void drawField() {
 
@@ -35,9 +36,46 @@ void drawField() {
 
 }
 
+void inputHandler() {
+
+	char action;
+
+	std::cin >> action;
+
+	if (action == 'w') {							// handler for check action for input chars
+		charPos = charPos - 11;
+
+	}
+	else if (action == 's') {
+		charPos = charPos + 11;
+	}
+	else if (action == 'a') {
+		charPos = charPos - 1;
+	}
+	else if (action == 'd') {
+		charPos = charPos + 1;
+	}
+	else {
+		std::cout << arrMessages[0];
+	}
+	arrGameField[prevPos] = ' ';
+
+
+
+}
+
 // proccedures for create a enemy entities
 bool EnemyEntityGotDie() {
-	if (arrGameField[positionEnemy] == '&') {
+	short counter = 0;
+
+	for (int i = 0; i < CountOfSym; i++) {
+
+		if (arrGameField[i] == '&') {
+			counter = counter + 1;
+		}
+	}
+
+	if (counter > 0) {
 		return false;
 	}
 	else {
@@ -48,70 +86,53 @@ bool EnemyEntityGotDie() {
 void spawnEntity() {
 	srand(time(0));
 
+	int arrPosJ[50];
+
 	int positionEntity = 11 + rand() % 97;
 
 	arrGameField[positionEntity] = Enemy;
 
-	positionEnemy = positionEntity;
-	previousPositionEnemy = positionEntity;
-
 }
 //
 
-void getNConstants() {
-	arrGameField[10] = '\n';
-	arrGameField[21] = '\n';
-	arrGameField[32] = '\n';
-	arrGameField[43] = '\n';
-	arrGameField[54] = '\n';
-	arrGameField[65] = '\n';
-	arrGameField[76] = '\n';
-	arrGameField[87] = '\n';
-	arrGameField[98] = '\n';
+void getScorePlus() {
 
+	if (charPos == positionEnemy) {
+		score = score + 1;
+	}
+	else {
+		score = score;
+	}
 }
 
-void getCls() {
-	Sleep(200);
-	system("cls");
-}
+void getScoreOnScreen() {
 
+	std::cout << std::endl << score << std::endl;
+
+}
 
 int main() {
 
-	while (true) {
+	bool gameAlreadyRunning = true;
+
+	while (gameAlreadyRunning) {
 
 
-		char action;
 		arrGameField[charPos] = GameCharacter;
 
-		getNConstants();
+		getNConstants(arrGameField);
 		drawField();
-		if (EnemyEntityGotDie) {
+		getScorePlus();
+		getScoreOnScreen();
+
+		if (EnemyEntityGotDie()) {
 			spawnEntity();
 		}
-		
+
 		prevPos = charPos;
-		std::cin >> action;
 
-		if (action == 'w') {							// handler for check action for input chars
-			charPos = charPos - 11;						
-														
-		}												
-		else if (action == 's') {						
-			charPos = charPos + 11;						
-		}												
-		else if (action == 'a') {						
-			charPos = charPos - 1;						
-		}												
-		else if (action == 'd') {						
-			charPos = charPos + 1;						
-		}												
-		else {											
-			std::cout << arrMessages[0];
-		}												
-		arrGameField[prevPos] = ' ';
-
+		inputHandler();
+		
 
 		getCls();
 	}

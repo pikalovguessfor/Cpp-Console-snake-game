@@ -5,3 +5,5 @@
 #include <conio.h>
 #include <string>
 #include <time.h>
+
+#include "functions.h"
