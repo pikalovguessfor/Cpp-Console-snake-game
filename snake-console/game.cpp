@@ -4,7 +4,7 @@ const int CountOfSym = 109;
 
 int charPos = (CountOfSym / 2 - 5);							//start initializer of position of character
 int prevPos;
-int positionEnemy;
+int positionEntity;
 int previousPositionEnemy;
 int score;
 
@@ -88,7 +88,7 @@ void spawnEntity() {
 
 	int arrPosJ[50];
 
-	int positionEntity = 11 + rand() % 97;
+	positionEntity = 11 + rand() % 97;
 
 	arrGameField[positionEntity] = Enemy;
 
@@ -97,7 +97,7 @@ void spawnEntity() {
 
 void getScorePlus() {
 
-	if (charPos == positionEnemy) {
+	if (charPos == positionEntity) {
 		score = score + 1;
 	}
 	else {
@@ -107,7 +107,7 @@ void getScorePlus() {
 
 void getScoreOnScreen() {
 
-	std::cout << std::endl << score << std::endl;
+	std::cout << std::endl << "score = " << score << std::endl;
 
 }
 
